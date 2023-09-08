@@ -7,12 +7,12 @@
   border-radius: 5px;
 }
 
-.tarjeta-episodio h4{
+.tarjeta-episodio h4 {
   margin: 0;
   margin-bottom: 10px;
 }
 
-.tarjeta-episodio > span {
+.tarjeta-episodio>span {
   font-size: 14px;
   font-weight: 400;
   opacity: 0.8;
