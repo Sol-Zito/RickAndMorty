@@ -15,11 +15,11 @@ import { useEffect, useState } from "react";
 
 const TarjetaPersonaje = ({ url, name, id }: DatosPersonaje) => {
   const favoritos = useAppSelector((state) => state.RickyReducer.favoritos);
-  const isFavorite = favoritos.includes(
-    (item: DatosPersonaje) => item.id === id
+  const isFavorito = favoritos.includes((item: DatosPersonaje) =>
+    console.log(item.id === id)
   );
-
-  const [agregadoAFav, setAgregadoAFav] = useState(isFavorite);
+  console.log("isFavorite ", isFavorito, id);
+  const [agregadoAFav, setAgregadoAFav] = useState(isFavorito);
 
   useEffect(() => {}, [favoritos]);
 
