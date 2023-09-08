@@ -3,7 +3,7 @@ import GrillaPersonajes from "../componentes/personajes/grilla-personajes.compon
 import Paginacion from "../componentes/paginacion/paginacion.componente";
 import { useAppDispatch, useAppSelector } from "../store";
 import { useEffect, useState } from "react";
-import { fetchCharacter } from "../store/todo/rickySlice";
+import { obtenerPersonajes } from "../store/todo/rickySlice";
 
 /**
  * Esta es la pagina principal. Aquí se debera ver el panel de filtros junto con la grilla de personajes.
@@ -21,7 +21,7 @@ const PaginaInicio = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchCharacter(page));
+    dispatch(obtenerPersonajes(page));
   }, [dispatch, page]);
 
   return (
