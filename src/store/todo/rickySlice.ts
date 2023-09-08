@@ -36,7 +36,7 @@ export const fetchCharacter = createAsyncThunk(
   `personajes/list/`,
   async (page: number): Promise<DatosPersonaje[]> => {
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?page=${page}&limit=10`
+      `https://rickandmortyapi.com/api/character/?page=${page}&limit=20`
     );
     const parseRes = await response.json();
     return parseRes.results;
@@ -70,12 +70,16 @@ export const characterSlice = createSlice({
       state.busqueda = action.payload;
     },
     AGREGARFAVORITO: (state, action) => {
-      if (!state.favoritos.find((item) => item.id === action.payload.id)) {
+      const existe = state.favoritos.find(
+        (item) => item.id === action.payload.id
+      );
+      if (!existe) {
         state.favoritos.push(action.payload);
       } else {
-        state.favoritos = state.favoritos.filter(
+        const sinItem = state.favoritos.filter(
           (item) => item.id !== action.payload.id
         );
+        state.favoritos = sinItem;
       }
     },
   },
