@@ -17,13 +17,13 @@
 
 }
 
-.detalle-header-texto p{
+.detalle-header-texto p {
     margin-top: 0;
     margin-bottom: 10px;
 }
 
 
-.detalle-header-texto p:nth-child(1){
+.detalle-header-texto p:nth-child(1) {
     font-size: 32px;
 }
 
