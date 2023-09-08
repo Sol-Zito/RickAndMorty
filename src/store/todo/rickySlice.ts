@@ -32,7 +32,7 @@ interface initialType {
   favoritos: DatosPersonaje[];
 }
 
-export const fetchCharacter = createAsyncThunk(
+export const obtenerPersonajes = createAsyncThunk(
   `personajes/list/`,
   async (page: number): Promise<DatosPersonaje[]> => {
     const response = await fetch(
@@ -43,7 +43,7 @@ export const fetchCharacter = createAsyncThunk(
   }
 );
 
-export const getCharacterByName = createAsyncThunk(
+export const personajePorNombre = createAsyncThunk(
   "personajes/byName",
   async (name: string): Promise<DatosPersonaje[]> => {
     const response = await fetch(
@@ -62,14 +62,14 @@ const initialState: initialType = {
   favoritos: [],
 };
 
-export const characterSlice = createSlice({
+export const personajesSlice = createSlice({
   name: "personajes",
   initialState,
   reducers: {
     BUSCAR_PERSONAJES: (state, action) => {
       state.busqueda = action.payload;
     },
-    AGREGARFAVORITO: (state, action) => {
+    AGREGAR_FAVORITO: (state, action) => {
       const existe = state.favoritos.find(
         (item) => item.id === action.payload.id
       );
@@ -82,26 +82,29 @@ export const characterSlice = createSlice({
         state.favoritos = sinItem;
       }
     },
+    ELIMINAR_FAVORITOS: (state) => {
+      state.favoritos = [];
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCharacter.pending, (state) => {
+      .addCase(obtenerPersonajes.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchCharacter.fulfilled, (state, action) => {
+      .addCase(obtenerPersonajes.fulfilled, (state, action) => {
         state.loading = false;
         state.personajes = action.payload;
       })
-      .addCase(fetchCharacter.rejected, (state, action) => {
+      .addCase(obtenerPersonajes.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? "Se genero un error";
       });
     builder
-      .addCase(getCharacterByName.fulfilled, (state, action) => {
+      .addCase(personajePorNombre.fulfilled, (state, action) => {
         state.loading = false;
         state.personajes = action.payload;
       })
-      .addCase(getCharacterByName.rejected, (state, action) => {
+      .addCase(personajePorNombre.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.error.message ?? "Surgio problema al buscar personaje";
@@ -109,7 +112,7 @@ export const characterSlice = createSlice({
   },
 });
 
-export const { BUSCAR_PERSONAJES: busqueda, AGREGARFAVORITO: agregaFavorito } =
-  characterSlice.actions;
-const RickyReducer = characterSlice.reducer;
+export const { BUSCAR_PERSONAJES, AGREGAR_FAVORITO, ELIMINAR_FAVORITOS } =
+  personajesSlice.actions;
+const RickyReducer = personajesSlice.reducer;
 export default RickyReducer;

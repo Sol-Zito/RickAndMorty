@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { agregaFavorito } from "../../store/todo/rickySlice";
+import { AGREGAR_FAVORITO } from "../../store/todo/rickySlice";
 import "./boton-favorito.css";
 /**
  * Boton que indica si un elemento es favorito o no, y da la posibilidad de marcarlo/desmarcarlo
@@ -19,15 +18,15 @@ type Datos = {
 
 const BotonFavorito = ({ esFavorito, idPersonaje, setAgregadoAFav }: Datos) => {
   const src = esFavorito ? "/imagenes/star-filled.png" : "/imagenes/star.png";
+
   const personaje = useAppSelector((state) => state.RickyReducer.personajes);
   const personajeRecibido = personaje.find((item) => item.id === idPersonaje);
+
   const dispatch = useAppDispatch();
   const addToFav = () => {
-    dispatch(agregaFavorito(personajeRecibido));
+    dispatch(AGREGAR_FAVORITO(personajeRecibido));
     setAgregadoAFav(!esFavorito);
   };
-
-  useEffect(() => {}, [esFavorito]);
 
   return (
     <div className="boton-favorito" onClick={addToFav}>
