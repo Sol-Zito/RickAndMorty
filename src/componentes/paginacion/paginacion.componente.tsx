@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
 import "./paginacion.css";
-import { fetchCharacter } from "../../store/todo/rickySlice";
-import { useAppDispatch, useAppSelector } from "../../store";
 
 /**
  * Componente que contiene los botones para paginar
