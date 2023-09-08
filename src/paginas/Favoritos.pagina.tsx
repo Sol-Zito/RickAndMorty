@@ -10,14 +10,16 @@ import { useAppSelector } from "../store";
  * @returns la pagina de favoritos
  */
 const PaginaFavoritos = () => {
-  const personajes = useAppSelector((state) => state.RickyReducer.favoritos);
+  const personajesFavoritos = useAppSelector(
+    (state) => state.RickyReducer.favoritos
+  );
   return (
     <div className="container">
       <div className="actions">
         <h3>Personajes Favoritos</h3>
-        <button className="danger">Test Button</button>
+        <button className="danger">Borrar favoritos</button>
       </div>
-      <GrillaPersonajes personajes={personajes} />
+      <GrillaPersonajes personajes={personajesFavoritos} />
     </div>
   );
 };
