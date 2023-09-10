@@ -1,19 +1,12 @@
-import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../store";
 import "./filtros.css";
-import { busqueda, getCharacterByName } from "../../store/todo/rickySlice";
 
-const Filtros = () => {
-  const dispatch = useAppDispatch();
-  const inputValue = useAppSelector((state) => state.RickyReducer.busqueda);
-  const [buscarPersonaje, setBuscarPersonaje] = useState("");
+type filtro = {
+  changeName: (name: string) => void;
+  defaultValue: string;
+  resetValue: () => void;
+};
 
-  const buscar = (e: { target: { value: string } }) => {
-    dispatch(busqueda(e.target.value));
-    dispatch(getCharacterByName(e.target.value));
-    setBuscarPersonaje(e.target.value);
-  };
-  console.log(buscarPersonaje);
+const Filtros = ({ changeName, defaultValue, resetValue }: filtro) => {
   return (
     <div className="filtros">
       <label htmlFor="nombre">Filtrar por nombre:</label>
@@ -21,8 +14,11 @@ const Filtros = () => {
         type="text"
         placeholder="Rick, Morty, Beth, Alien, ...etc"
         name="nombre"
-        value={buscarPersonaje}
-        onChange={buscar}
+        value={defaultValue}
+        onChange={(e) => {
+          resetValue();
+          changeName(e.target.value);
+        }}
       />
     </div>
   );
