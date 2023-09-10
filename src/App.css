@@ -39,6 +39,10 @@ button.danger {
     color: white;
 }
 
+button.danger[disabled] {
+    background-color: rgb(128, 134, 140);
+}
+
 @media (max-width: 1280px) {
     .container {
         max-width: 960px;

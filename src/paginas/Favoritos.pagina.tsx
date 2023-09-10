@@ -26,7 +26,11 @@ const PaginaFavoritos = () => {
     <div className="container">
       <div className="actions">
         <h3>Personajes Favoritos</h3>
-        <button className="danger" onClick={eliminarTodos}>
+        <button
+          className="danger"
+          disabled={personajesFavoritos.length > 0 ? false : true}
+          onClick={eliminarTodos}
+        >
           Borrar favoritos
         </button>
       </div>
