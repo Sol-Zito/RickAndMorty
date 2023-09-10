@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { AGREGAR_FAVORITO } from "../../store/todo/rickySlice";
 import "./boton-favorito.css";
@@ -19,7 +20,9 @@ type Datos = {
 const BotonFavorito = ({ esFavorito, idPersonaje, setAgregadoAFav }: Datos) => {
   const src = esFavorito ? "/imagenes/star-filled.png" : "/imagenes/star.png";
 
-  const personaje = useAppSelector((state) => state.RickyReducer.personajes);
+  const personaje = useAppSelector(
+    (state) => state.RickyReducer.personajes.personajes
+  );
   const personajeRecibido = personaje.find((item) => item.id === idPersonaje);
 
   const dispatch = useAppDispatch();
