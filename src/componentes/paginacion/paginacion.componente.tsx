@@ -10,11 +10,12 @@ import "./paginacion.css";
  */
 
 type paginacion = {
+  maxpage: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Paginacion = ({ page, setPage }: paginacion) => {
+const Paginacion = ({ page, setPage, maxpage }: paginacion) => {
   return (
     <div className="paginacion">
       <button
@@ -25,7 +26,7 @@ const Paginacion = ({ page, setPage }: paginacion) => {
         Anterior
       </button>
       <button
-        disabled={false}
+        disabled={page === maxpage ? true : false}
         className={"primary"}
         onClick={() => setPage(page + 1)}
       >
