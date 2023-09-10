@@ -25,40 +25,47 @@ export type DatosPersonaje = {
 };
 
 interface initialType {
-  personajes: DatosPersonaje[];
+  personajes: DatosADevolver;
   loading: boolean;
   error: string | null;
-  busqueda: string;
   favoritos: DatosPersonaje[];
 }
 
-export const obtenerPersonajes = createAsyncThunk(
-  `personajes/list/`,
-  async (page: number): Promise<DatosPersonaje[]> => {
-    const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?page=${page}&limit=20`
-    );
-    const parseRes = await response.json();
-    return parseRes.results;
-  }
-);
+export type DatosRecibidos = {
+  page: number;
+  nombre: string;
+};
 
-export const personajePorNombre = createAsyncThunk(
+type DatosADevolver = {
+  pageTotales: number;
+  personajes: DatosPersonaje[];
+};
+
+export const obtenerPersonajes = createAsyncThunk(
   "personajes/byName",
-  async (name: string): Promise<DatosPersonaje[]> => {
+  async ({ page, nombre }: DatosRecibidos): Promise<DatosADevolver> => {
     const response = await fetch(
-      `https://rickandmortyapi.com/api/character/?name=${name}`
+      `https://rickandmortyapi.com/api/character/?name=${nombre}&page=${page}`
     );
     const parseRes = await response.json();
-    return parseRes.results;
+    console.log("parseRes", parseRes);
+    const paginasTotales = parseRes.info.pages;
+    const personajesObtenidos = parseRes.results;
+    const recibido: DatosADevolver = {
+      pageTotales: paginasTotales,
+      personajes: personajesObtenidos,
+    };
+    return recibido;
   }
 );
 
 const initialState: initialType = {
-  personajes: [],
+  personajes: {
+    pageTotales: 0,
+    personajes: [],
+  },
   loading: true,
   error: null,
-  busqueda: "",
   favoritos: [],
 };
 
@@ -66,9 +73,6 @@ export const personajesSlice = createSlice({
   name: "personajes",
   initialState,
   reducers: {
-    BUSCAR_PERSONAJES: (state, action) => {
-      state.busqueda = action.payload;
-    },
     AGREGAR_FAVORITO: (state, action) => {
       const existe = state.favoritos.find(
         (item) => item.id === action.payload.id
@@ -88,23 +92,11 @@ export const personajesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(obtenerPersonajes.pending, (state) => {
-        state.loading = true;
-      })
       .addCase(obtenerPersonajes.fulfilled, (state, action) => {
         state.loading = false;
         state.personajes = action.payload;
       })
       .addCase(obtenerPersonajes.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message ?? "Se genero un error";
-      });
-    builder
-      .addCase(personajePorNombre.fulfilled, (state, action) => {
-        state.loading = false;
-        state.personajes = action.payload;
-      })
-      .addCase(personajePorNombre.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.error.message ?? "Surgio problema al buscar personaje";
@@ -112,7 +104,6 @@ export const personajesSlice = createSlice({
   },
 });
 
-export const { BUSCAR_PERSONAJES, AGREGAR_FAVORITO, ELIMINAR_FAVORITOS } =
-  personajesSlice.actions;
+export const { AGREGAR_FAVORITO, ELIMINAR_FAVORITOS } = personajesSlice.actions;
 const RickyReducer = personajesSlice.reducer;
 export default RickyReducer;
