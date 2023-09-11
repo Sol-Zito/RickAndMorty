@@ -5,8 +5,11 @@ import "./paginacion.css";
  *
  * Deberás agregar las propiedades necesarias para que funcione correctamente
  *
+ * @param {number} maxPage  valor maximo de paginas - varia segun datos obtenidos
+ * @param {number} page valor de la pagina actual
+ * @param {function} setPage funcion para cambiar valor a page
  *
- * @returns un JSX element
+ * @returns un TSX element
  */
 
 type paginacion = {

@@ -1,5 +1,17 @@
 import "./filtros.css";
 
+/**
+ *
+ * Componente que toma el valor del input, para buscar personajes en la API
+ *
+ * @param {function} changeName funcion que toma un parametro string
+ * @param {string} defaultName string que sirve para poder cambiar el valor al input en caso de Limpiar filtro
+ * @param {function} resetValue funcion que sirve para resetear los valores del input y de la busqueda
+ *
+ * @return devulve un string el mismo sera utilizado para buscar personajes
+ *
+ */
+
 type filtro = {
   changeName: (name: string) => void;
   defaultValue: string;

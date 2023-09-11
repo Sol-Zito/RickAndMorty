@@ -6,13 +6,11 @@ import { DatosPersonaje } from "./../../store/todo/rickySlice";
  * Grilla de personajes para la pagina de inicio
  *
  * Deberás agregar las funciones necesarias para mostrar y paginar los personajes
- *
- *
- * @returns un JSX element
+ *@param {DatosPersonaje} personajes --> Aray con los datos de los personajes obtenidos
+ * @returns un TSX element
  */
-type personajesRecibidos = { personajes: Array<DatosPersonaje> };
 
-const GrillaPersonajes = ({ personajes }: personajesRecibidos) => {
+const GrillaPersonajes = (personajes: DatosPersonaje[]) => {
   return (
     <div className="grilla-personajes">
       {personajes.map((personaje: DatosPersonaje) => {
