@@ -3,7 +3,7 @@ import GrillaPersonajes from "../componentes/personajes/grilla-personajes.compon
 import Paginacion from "../componentes/paginacion/paginacion.componente";
 import { useAppDispatch, useAppSelector } from "../store";
 import { useEffect, useState } from "react";
-import { obtenerPersonajes } from "../store/todo/rickySlice";
+import { getAllCharacters } from "../store/todo/rickySlice";
 
 /**
  * Esta es la pagina principal. Aquí se debera ver el panel de filtros junto con la grilla de personajes.
@@ -17,28 +17,24 @@ const PaginaInicio = () => {
   const [page, setPage] = useState(1);
   const dispatch = useAppDispatch();
 
-  const personajes = useAppSelector(
-    (state) => state.RickyReducer.personajes.personajes
+  const characters = useAppSelector(
+    (state) => state.RickyReducer.characters.characters
   );
-  const paginasTotales = useAppSelector(
-    (state) => state.RickyReducer.personajes.pageTotales
+  const pageTotals = useAppSelector(
+    (state) => state.RickyReducer.characters.pageTotales
   );
 
   const error = useAppSelector((state) => state.RickyReducer.error);
 
-  if (error) {
-    console.log("error", error);
-  }
-
-  const [nombreFiltrado, changeName] = useState("");
+  const [filteredName, changeName] = useState("");
   const resetValue = () => {
     changeName("");
     setPage(1);
   };
 
   useEffect(() => {
-    dispatch(obtenerPersonajes({ page, nombre: nombreFiltrado }));
-  }, [dispatch, page, nombreFiltrado]);
+    dispatch(getAllCharacters({ page, name: filteredName }));
+  }, [dispatch, page, filteredName]);
 
   return (
     <div className="container">
@@ -50,14 +46,14 @@ const PaginaInicio = () => {
       </div>
       <Filtros
         changeName={changeName}
-        defaultValue={nombreFiltrado}
+        defaultValue={filteredName}
         resetValue={resetValue}
       />
       {error && <h2>Surgio un error al buscar personaje</h2>}
 
-      <Paginacion page={page} setPage={setPage} maxpage={paginasTotales} />
-      <GrillaPersonajes personajes={personajes} />
-      <Paginacion page={page} setPage={setPage} maxpage={paginasTotales} />
+      <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+      <GrillaPersonajes personajes={characters} />
+      <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
     </div>
   );
 };
