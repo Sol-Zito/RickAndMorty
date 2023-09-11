@@ -23,27 +23,34 @@ export type DatosPersonaje = {
   url?: string;
   created?: string;
 };
+export interface EpisodeDates {
+  id: number;
+  name: string;
+  air_date: string;
+  episode: string;
+}
 
 interface initialType {
-  personajes: DatosADevolver;
+  characters: DatosADevolver;
   loading: boolean;
   error: string | null;
-  favoritos: DatosPersonaje[];
+  favorites: DatosPersonaje[];
+  episodes: EpisodeDates[];
 }
 
 export type DatosRecibidos = {
   page: number;
-  nombre: string;
+  name: string;
 };
 
 type DatosADevolver = {
   pageTotales: number;
-  personajes: DatosPersonaje[];
+  characters: DatosPersonaje[];
 };
 
-export const obtenerPersonajes = createAsyncThunk(
+export const getAllCharacters = createAsyncThunk(
   "personajes/byName",
-  async ({ page, nombre }: DatosRecibidos): Promise<DatosADevolver> => {
+  async ({ page, name: nombre }: DatosRecibidos): Promise<DatosADevolver> => {
     const response = await fetch(
       `https://rickandmortyapi.com/api/character/?name=${nombre}&page=${page}`
     );
@@ -53,57 +60,76 @@ export const obtenerPersonajes = createAsyncThunk(
     const personajesObtenidos = parseRes.results;
     const recibido: DatosADevolver = {
       pageTotales: paginasTotales,
-      personajes: personajesObtenidos,
+      characters: personajesObtenidos,
     };
     return recibido;
   }
 );
+export const getEpisodes = createAsyncThunk(
+  "episodes/byId",
+  async (idEpisodes: number[]): Promise<EpisodeDates[]> => {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/episode/${idEpisodes}`
+    );
+    const parseRes = await response.json();
+    return parseRes.length ? parseRes : [parseRes];
+  }
+);
 
 const initialState: initialType = {
-  personajes: {
+  characters: {
     pageTotales: 0,
-    personajes: [],
+    characters: [],
   },
   loading: true,
   error: null,
-  favoritos: [],
+  favorites: [],
+  episodes: [],
 };
 
 export const personajesSlice = createSlice({
   name: "personajes",
   initialState,
   reducers: {
-    AGREGAR_FAVORITO: (state, action) => {
-      const existe = state.favoritos.find(
+    ADD_FAVORITE: (state, action) => {
+      const existe = state.favorites.find(
         (item) => item.id === action.payload.id
       );
       if (!existe) {
-        state.favoritos.push(action.payload);
+        state.favorites.push(action.payload);
       } else {
-        const sinItem = state.favoritos.filter(
+        const sinItem = state.favorites.filter(
           (item) => item.id !== action.payload.id
         );
-        state.favoritos = sinItem;
+        state.favorites = sinItem;
       }
     },
-    ELIMINAR_FAVORITOS: (state) => {
-      state.favoritos = [];
+    DELETE_FAVORITES: (state) => {
+      state.favorites = [];
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(obtenerPersonajes.fulfilled, (state, action) => {
-        state.loading = false;
-        state.personajes = action.payload;
-      })
-      .addCase(obtenerPersonajes.rejected, (state, action) => {
-        state.loading = false;
-        state.error =
-          action.error.message ?? "Surgio problema al buscar personaje";
-      });
+    builder.addCase(getAllCharacters.fulfilled, (state, action) => {
+      state.loading = false;
+      state.characters = action.payload;
+    });
+    builder.addCase(getAllCharacters.rejected, (state, action) => {
+      state.loading = false;
+      state.error =
+        action.error.message ?? "Surgio problema al buscar personaje";
+    });
+    builder.addCase(getEpisodes.fulfilled, (state, action) => {
+      state.loading = false;
+      state.episodes = action.payload;
+    });
+    builder.addCase(getEpisodes.rejected, (state, action) => {
+      state.loading = false;
+      state.error =
+        action.error.message ?? "No se pudieron cargar los episodios";
+    });
   },
 });
 
-export const { AGREGAR_FAVORITO, ELIMINAR_FAVORITOS } = personajesSlice.actions;
+export const { ADD_FAVORITE, DELETE_FAVORITES } = personajesSlice.actions;
 const RickyReducer = personajesSlice.reducer;
 export default RickyReducer;
