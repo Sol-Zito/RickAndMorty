@@ -1,9 +1,9 @@
 import "./Detalle.css";
 import BotonFavorito from "../componentes/botones/boton-favorito.componente";
 import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
-import { useState } from "react";
-import { useAppSelector } from "../store";
-import { DatosPersonaje } from "../store/todo/rickySlice";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../store";
+import { EpisodeDates, getEpisodes } from "../store/todo/rickySlice";
 import { useParams } from "react-router-dom";
 
 /**
@@ -19,37 +19,52 @@ import { useParams } from "react-router-dom";
  * @returns la pagina de detalle
  */
 const PaginaDetalle = () => {
-  const propiedades = useParams();
-  console.log("propiedades", propiedades);
+  const { id } = useParams();
+  const episodesDispatch = useAppDispatch();
+  const [functionExecuted, setFunctionExecuted] = useState(false);
+  const allCharacters = useAppSelector(
+    (state) => state.RickyReducer.characters.characters
+  );
+  const characterToUse = allCharacters.find((item) => item.id === Number(id));
 
-  const favorito = useAppSelector((state) => state.RickyReducer.favoritos);
-  const isFavorite = favorito.includes((item: DatosPersonaje) => item.id === 8);
-  const [agregadoAFav, setAgregadoAFav] = useState(isFavorite);
+  const allEpisodes = useAppSelector((state) => state.RickyReducer.episodes);
+
+  const episodeNumber = characterToUse?.episode?.map((element) =>
+    Number(element.split("/").at(-1))
+  );
+  if (episodeNumber && !functionExecuted) {
+    episodesDispatch(getEpisodes(episodeNumber));
+    setFunctionExecuted(true);
+  }
+
   return (
     <div className="container">
-      <h3>Rick Sanchez</h3>
+      <h3>{characterToUse?.name}</h3>
       <div className={"detalle"}>
         <div className={"detalle-header"}>
-          <img
-            src="https://rickandmortyapi.com/api/character/avatar/1.jpeg"
-            alt="Rick Sanchez"
-          />
+          <img src={characterToUse?.image} alt="Rick Sanchez" />
           <div className={"detalle-header-texto"}>
-            <p>Rick Sanchez</p>
-            <p>Planeta: Earth</p>
-            <p>Genero: Male</p>
+            <p>{characterToUse?.name}</p>
+            <p>Planeta: {characterToUse?.origin?.name}</p>
+            <p>Genero: {characterToUse?.gender}</p>
           </div>
-          <BotonFavorito
-            esFavorito={agregadoAFav}
-            setAgregadoAFav={setAgregadoAFav}
-          />
+          {/* <BotonFavorito setCharacterFav={} esFavorito={false} /> */}
         </div>
       </div>
       <h4>Lista de episodios donde apareció el personaje</h4>
       <div className={"episodios-grilla"}>
-        <TarjetaEpisodio />
-        <TarjetaEpisodio />
-        <TarjetaEpisodio />
+        {allEpisodes?.map((data: EpisodeDates) => {
+          const { name, episode, air_date, id } = data;
+          return (
+            <TarjetaEpisodio
+              air_date={air_date}
+              episode={episode}
+              name={name}
+              id={id}
+              key={id}
+            />
+          );
+        })}
       </div>
     </div>
   );
