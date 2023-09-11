@@ -1,6 +1,6 @@
 import GrillaPersonajes from "../componentes/personajes/grilla-personajes.componente";
 import { useAppDispatch, useAppSelector } from "../store";
-import { ELIMINAR_FAVORITOS } from "../store/todo/rickySlice";
+import { DELETE_FAVORITES } from "../store/todo/rickySlice";
 
 /**
  * Esta es la pagina de favoritos. Aquí se deberan ver todos los personajes marcados como favoritos
@@ -11,14 +11,14 @@ import { ELIMINAR_FAVORITOS } from "../store/todo/rickySlice";
  * @returns la pagina de favoritos
  */
 const PaginaFavoritos = () => {
-  const personajesFavoritos = useAppSelector(
-    (state) => state.RickyReducer.favoritos
-  );
   const dispatch = useAppDispatch();
+  const personajesFavoritos = useAppSelector(
+    (state) => state.RickyReducer.favorites
+  );
 
   const eliminarTodos = () => {
     if (window.confirm("Desea eliminar todos?")) {
-      dispatch(ELIMINAR_FAVORITOS());
+      dispatch(DELETE_FAVORITES());
       alert("se han eliminado los favoritos");
     }
   };
