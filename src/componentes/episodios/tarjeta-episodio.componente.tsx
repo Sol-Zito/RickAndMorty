@@ -1,20 +1,23 @@
+import { EpisodeDates } from "../../store/todo/rickySlice";
 import "./tarjeta-episodio.css";
 
 /**
  * Tarjeta para cada episodio dentro de la vista de personaje.
  *
- * Deberás agregar las propiedades necesarias para mostrar los datos de los episodios
+ * @param name string --> nombre del episodio
+ * @param episode string --> codigo del episodio
+ * @param air_date string --> fecha de lanzamiento
  *
- *
- * @returns un JSX element
+ * @returns un TSX element
  */
-const TarjetaEpisodio = () => {
+
+const TarjetaEpisodio = ({ name, episode, air_date, id }: EpisodeDates) => {
   return (
     <div className="tarjeta-episodio">
-      <h4>Close Rick-counters of the Rick Kind</h4>
+      <h4>{name}</h4>
       <div>
-        <span>S01E01</span>
-        <span>Lanzado el: April 7, 2014</span>
+        <span>{episode}</span>
+        <span>Lanzado el: {air_date}</span>
       </div>
     </div>
   );
