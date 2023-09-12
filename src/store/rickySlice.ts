@@ -67,6 +67,7 @@ export const personajesSlice = createSlice({
     },
     DELETE_FAVORITES: (state) => {
       state.favorites = [];
+      setStorage(Favorites.favs, JSON.stringify(state.favorites));
     },
   },
   extraReducers: (builder) => {
