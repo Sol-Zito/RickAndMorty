@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../store";
+import { DatosPersonaje } from "../../globalStates/globalVariables";
 import BotonFavorito from "../botones/boton-favorito.componente";
 import "./tarjeta-personaje.css";
-import { DatosPersonaje } from "../../store/rickySlice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 

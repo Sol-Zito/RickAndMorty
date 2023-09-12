@@ -1,8 +1,9 @@
+import {
+  DatosPersonaje,
+  personajesRecibidos,
+} from "../../globalStates/globalVariables";
 import "./grilla-personajes.css";
 import TarjetaPersonaje from "./tarjeta-personaje.componente";
-import { DatosPersonaje } from "../../store/rickySlice";
-
-type personajesRecibidos = { personajes: Array<DatosPersonaje> };
 
 /**
  * Grilla de personajes para la pagina de inicio

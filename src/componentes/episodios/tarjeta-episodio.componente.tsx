@@ -1,4 +1,4 @@
-import { EpisodeDates } from "../../store/rickySlice";
+import { EpisodeDates } from "../../globalStates/globalVariables";
 import "./tarjeta-episodio.css";
 
 /**

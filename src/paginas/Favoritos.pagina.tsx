@@ -15,6 +15,7 @@ const PaginaFavoritos = () => {
   const allCharactersFav = useAppSelector(
     (state) => state.RickyReducer.favorites
   );
+
   /**
    * Funcion para eliminar todos los personajes marcados en favoritos.
    * La misma consultara si el usuario quiere confirmar dicha accion.

@@ -1,51 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setStorage, getStorage } from "../globalStates/localStorage";
+import {
+  DatosADevolver,
+  DatosPersonaje,
+  DatosRecibidos,
+  EpisodeDates,
+  Favorites,
+  initialType,
+} from "../globalStates/globalVariables";
 
-export type DatosPersonaje = {
-  id?: number;
-  name: string;
-  status?: string;
-  species?: string;
-  type?: string;
-  gender?: string;
-
-  origin?: {
-    name: string;
-    url: string;
-  };
-
-  location?: {
-    name: string;
-    url: string;
-  };
-
-  image?: string;
-  episode?: string[];
-  url?: string;
-  created?: string;
-};
-export interface EpisodeDates {
-  id: number;
-  name: string;
-  air_date: string;
-  episode: string;
-}
-
-interface initialType {
-  characters: DatosADevolver;
-  loading: boolean;
-  error: string | null;
-  favorites: DatosPersonaje[];
-  episodes: EpisodeDates[];
-}
-
-export type DatosRecibidos = {
-  page: number;
-  name: string;
-};
-
-type DatosADevolver = {
-  pageTotales: number;
-  characters: DatosPersonaje[];
+const initialState: initialType = {
+  characters: {
+    pageTotales: 0,
+    characters: [],
+  },
+  loading: true,
+  error: null,
+  favorites: getStorage<DatosPersonaje[]>(Favorites.favs) || [],
+  episodes: [],
 };
 
 export const getAllCharacters = createAsyncThunk(
@@ -75,17 +47,6 @@ export const getEpisodes = createAsyncThunk(
   }
 );
 
-const initialState: initialType = {
-  characters: {
-    pageTotales: 0,
-    characters: [],
-  },
-  loading: true,
-  error: null,
-  favorites: [],
-  episodes: [],
-};
-
 export const personajesSlice = createSlice({
   name: "personajes",
   initialState,
@@ -102,6 +63,7 @@ export const personajesSlice = createSlice({
         );
         state.favorites = sinItem;
       }
+      setStorage(Favorites.favs, JSON.stringify(state.favorites));
     },
     DELETE_FAVORITES: (state) => {
       state.favorites = [];

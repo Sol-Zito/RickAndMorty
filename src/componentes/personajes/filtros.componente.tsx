@@ -1,3 +1,4 @@
+import { filtro } from "../../globalStates/globalVariables";
 import "./filtros.css";
 
 /**
@@ -11,12 +12,6 @@ import "./filtros.css";
  * @return devulve un string, el mismo sera utilizado para buscar personajes
  *
  */
-
-type filtro = {
-  changeName: (name: string) => void;
-  defaultValue: string;
-  resetValue: () => void;
-};
 
 const Filtros = ({ changeName, defaultValue, resetValue }: filtro) => {
   return (

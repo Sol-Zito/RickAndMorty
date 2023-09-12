@@ -1,17 +1,5 @@
+import { paginacion } from "../../globalStates/globalVariables";
 import "./paginacion.css";
-
-/**
- *
- * @param {number} maxPage  valor maximo de paginas
- * @param {number} page valor de la pagina actual
- * @param {function} setPage funcion para cambiar valor a page
- */
-
-type paginacion = {
-  maxpage: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-};
 
 /**
  * Componente que contiene los botones para paginar

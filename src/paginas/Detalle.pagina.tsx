@@ -2,9 +2,10 @@ import "./Detalle.css";
 import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import { EpisodeDates, getEpisodes } from "../store/rickySlice";
+import { getEpisodes } from "../store/rickySlice";
 import { useParams } from "react-router-dom";
 import BotonFavorito from "../componentes/botones/boton-favorito.componente";
+import { EpisodeDates } from "../globalStates/globalVariables";
 
 /**
  * Esta es la pagina de detalle. Aqui se puede mostrar la vista sobre el personaje seleccionado
