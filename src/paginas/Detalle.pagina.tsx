@@ -58,7 +58,6 @@ const PaginaDetalle = () => {
     }
   };
   searchEpisodes();
-
   return (
     <div className="container">
       <h3>{characterToUse?.name}</h3>
@@ -79,18 +78,22 @@ const PaginaDetalle = () => {
       </div>
       <h4>Lista de episodios donde apareció el personaje</h4>
       <div className={"episodios-grilla"}>
-        {allEpisodes?.map((data: EpisodeDates) => {
-          const { name, episode, air_date, id } = data;
-          return (
-            <TarjetaEpisodio
-              air_date={air_date}
-              episode={episode}
-              name={name}
-              id={id}
-              key={id}
-            />
-          );
-        })}
+        {allEpisodes.length < 1 ? (
+          <h3>No hay episodios</h3>
+        ) : (
+          allEpisodes?.map((data: EpisodeDates) => {
+            const { name, episode, air_date, id } = data;
+            return (
+              <TarjetaEpisodio
+                air_date={air_date}
+                episode={episode}
+                name={name}
+                id={id}
+                key={id}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
