@@ -2,36 +2,50 @@ import { useAppSelector } from "../../store";
 import BotonFavorito from "../botones/boton-favorito.componente";
 import "./tarjeta-personaje.css";
 import { DatosPersonaje } from "./../../store/todo/rickySlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 /**
  * Tarjeta para cada personaje dentro de la grilla de personajes.
  *
  * Deberás agregar las propiedades necesarias para mostrar los datos de los personajes
+ *  @param {string} url propiedad de la imagen del Personaje
+ * @param {string}  name nombre del Personaje
+ * @param {number} id id del Personaje
  *
  *
  * @returns un JSX element
  */
 
 const TarjetaPersonaje = ({ url, name, id }: DatosPersonaje) => {
-  const favoritos = useAppSelector((state) => state.RickyReducer.favoritos);
-  const isFavorito = favoritos.includes((item: DatosPersonaje) =>
-    console.log(item.id === id)
+  const favorites = useAppSelector((state) => state.RickyReducer.favorites);
+  const allCharacters = useAppSelector(
+    (state) => state.RickyReducer.characters.characters
   );
-  console.log("isFavorite ", isFavorito, id);
-  const [agregadoAFav, setAgregadoAFav] = useState(isFavorito);
 
-  useEffect(() => {}, [favoritos]);
+  const isFav = favorites.find((item: DatosPersonaje) => item.id === id)
+    ? true
+    : false;
+  const [characterFav, setCharacterFav] = useState(isFav);
+
+  /**
+   * Va a devolver el personaje y su informacion, en caso de encontrarlo dentro de la applicacion
+   */
+  const workWith =
+    allCharacters.find((item) => item.id === id) ??
+    favorites.find((item: DatosPersonaje) => item.id === id);
 
   return (
     <div className="tarjeta-personaje">
-      <img src={url} alt={name} />
+      <Link to={`/detalle/${id}`}>
+        <img src={url} alt={name} />
+      </Link>
       <div className="tarjeta-personaje-body">
         <span>{name}</span>
         <BotonFavorito
-          esFavorito={agregadoAFav}
-          setAgregadoAFav={setAgregadoAFav}
-          idPersonaje={id}
+          esFavorito={characterFav}
+          setCharacterFav={setCharacterFav}
+          idCharacter={workWith}
         />
       </div>
     </div>
