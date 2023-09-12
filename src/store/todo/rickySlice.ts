@@ -91,7 +91,7 @@ export const personajesSlice = createSlice({
   name: "personajes",
   initialState,
   reducers: {
-    ADD_FAVORITE: (state, action) => {
+    TOGGLE_FAVORITE: (state, action) => {
       const existe = state.favorites.find(
         (item) => item.id === action.payload.id
       );
@@ -130,6 +130,6 @@ export const personajesSlice = createSlice({
   },
 });
 
-export const { ADD_FAVORITE, DELETE_FAVORITES } = personajesSlice.actions;
+export const { TOGGLE_FAVORITE, DELETE_FAVORITES } = personajesSlice.actions;
 const RickyReducer = personajesSlice.reducer;
 export default RickyReducer;
