@@ -26,7 +26,7 @@ const PaginaInicio = () => {
   );
 
   const errorApi = useAppSelector((state) => state.RickyReducer.error);
-
+  const loading = useAppSelector((state) => state.RickyReducer.loading);
   /**
    * Resetea los valores de busqueda
    */
@@ -52,13 +52,19 @@ const PaginaInicio = () => {
         defaultValue={filteredName}
         resetValue={resetValue}
       />
-      {errorApi ? (
-        <h4>{`No se encontraron resultados con ${filteredName}`}</h4>
+      {loading ? (
+        <h4>Cargando Personajes...</h4>
       ) : (
         <>
-          <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
-          <GrillaPersonajes personajes={characters} />
-          <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+          {errorApi ? (
+            <h4>{`No se encontraron resultados con ${filteredName}`}</h4>
+          ) : (
+            <>
+              <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+              <GrillaPersonajes personajes={characters} />
+              <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+            </>
+          )}
         </>
       )}
     </div>
