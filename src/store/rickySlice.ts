@@ -73,18 +73,23 @@ export const personajesSlice = createSlice({
     builder.addCase(getAllCharacters.fulfilled, (state, action) => {
       state.loading = false;
       state.characters = action.payload;
+      state.error = "";
     });
     builder.addCase(getAllCharacters.rejected, (state, action) => {
       state.loading = false;
+      state.characters.characters = [];
+      state.characters.pageTotales = 1;
       state.error =
         action.error.message ?? "Surgio problema al buscar personaje";
     });
     builder.addCase(getEpisodes.fulfilled, (state, action) => {
       state.loading = false;
       state.episodes = action.payload;
+      state.error = "";
     });
     builder.addCase(getEpisodes.rejected, (state, action) => {
       state.loading = false;
+      state.episodes = [];
       state.error =
         action.error.message ?? "No se pudieron cargar los episodios";
     });

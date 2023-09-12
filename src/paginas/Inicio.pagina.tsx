@@ -15,6 +15,7 @@ import { getAllCharacters } from "../store/rickySlice";
  */
 const PaginaInicio = () => {
   const [page, setPage] = useState(1);
+  const [filteredName, changeName] = useState("");
   const dispatch = useAppDispatch();
 
   const characters = useAppSelector(
@@ -24,7 +25,8 @@ const PaginaInicio = () => {
     (state) => state.RickyReducer.characters.pageTotales
   );
 
-  const [filteredName, changeName] = useState("");
+  const errorApi = useAppSelector((state) => state.RickyReducer.error);
+
   /**
    * Resetea los valores de busqueda
    */
@@ -35,7 +37,7 @@ const PaginaInicio = () => {
 
   useEffect(() => {
     dispatch(getAllCharacters({ page, name: filteredName }));
-  }, [dispatch, page, filteredName]);
+  }, [dispatch, page, filteredName, errorApi]);
 
   return (
     <div className="container">
@@ -50,10 +52,15 @@ const PaginaInicio = () => {
         defaultValue={filteredName}
         resetValue={resetValue}
       />
-
-      <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
-      <GrillaPersonajes personajes={characters} />
-      <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+      {errorApi ? (
+        <h4>{`No se encontraron resultados con ${filteredName}`}</h4>
+      ) : (
+        <>
+          <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+          <GrillaPersonajes personajes={characters} />
+          <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
+        </>
+      )}
     </div>
   );
 };
