@@ -1,15 +1,10 @@
 import "./paginacion.css";
 
 /**
- * Componente que contiene los botones para paginar
  *
- * Deberás agregar las propiedades necesarias para que funcione correctamente
- *
- * @param {number} maxPage  valor maximo de paginas - varia segun datos obtenidos
+ * @param {number} maxPage  valor maximo de paginas
  * @param {number} page valor de la pagina actual
  * @param {function} setPage funcion para cambiar valor a page
- *
- * @returns un TSX element
  */
 
 type paginacion = {
@@ -17,6 +12,14 @@ type paginacion = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
+
+/**
+ * Componente que contiene los botones para paginar
+ * @param {paginacion} page valor de la pagina actual
+ * @param {paginacion} setPage funcion para cambiar valor a page
+ * @param {paginacion} maxPage  valor maximo de paginas - varia segun datos obtenidos
+ * @returns un TSX element
+ */
 
 const Paginacion = ({ page, setPage, maxpage }: paginacion) => {
   return (

@@ -1,8 +1,8 @@
 import "./Detalle.css";
 import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import { EpisodeDates, getEpisodes } from "../store/todo/rickySlice";
+import { EpisodeDates, getEpisodes } from "../store/rickySlice";
 import { useParams } from "react-router-dom";
 import BotonFavorito from "../componentes/botones/boton-favorito.componente";
 
@@ -29,6 +29,7 @@ const PaginaDetalle = () => {
   const characterToUse =
     allCharacters.find((item) => item.id === Number(id)) ??
     favorites.find((item) => item.id === Number(id));
+
   const isFav = favorites.find((item) => item.id === Number(id)) ? true : false;
   const [characterFav, setCharacterFav] = useState(isFav);
 
@@ -44,11 +45,18 @@ const PaginaDetalle = () => {
   const episodeNumber = characterToUse?.episode?.map((element) =>
     Number(element.split("/").at(-1))
   );
-
-  if (episodeNumber && !functionExecuted) {
-    episodesDispatch(getEpisodes(episodeNumber));
-    setFunctionExecuted(true);
-  }
+  /**
+   * Se buscaran los episodios siempre y cuando exista episodeNumber.
+   * Tambien se tendra en cuenta si ya fueron solicitados los episodios utilizando functionExecuted,
+   * para asi evitar un loop infinito.
+   * */
+  const searchEpisodes = () => {
+    if (episodeNumber && !functionExecuted) {
+      episodesDispatch(getEpisodes(episodeNumber));
+      setFunctionExecuted(true);
+    }
+  };
+  searchEpisodes();
 
   return (
     <div className="container">

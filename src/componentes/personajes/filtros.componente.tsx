@@ -8,7 +8,7 @@ import "./filtros.css";
  * @param {string} defaultName string que sirve para poder cambiar el valor al input en caso de Limpiar filtro
  * @param {function} resetValue funcion que sirve para resetear los valores del input y de la busqueda
  *
- * @return devulve un string el mismo sera utilizado para buscar personajes
+ * @return devulve un string, el mismo sera utilizado para buscar personajes
  *
  */
 

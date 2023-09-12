@@ -1,12 +1,12 @@
-import { EpisodeDates } from "../../store/todo/rickySlice";
+import { EpisodeDates } from "../../store/rickySlice";
 import "./tarjeta-episodio.css";
 
 /**
  * Tarjeta para cada episodio dentro de la vista de personaje.
  *
- * @param {string} name = nombre del episodio
- * @param {string} episode = codigo del episodio
- * @param {string} air_date = fecha de lanzamiento
+ * @param {string} name nombre del episodio
+ * @param {string} episode codigo del episodio
+ * @param {string} air_date fecha de lanzamiento
  *
  * @returns un TSX element
  */

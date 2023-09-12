@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import RickyReducer from "./todo/rickySlice";
+import RickyReducer from "./rickySlice";
 
 const store = configureStore({
   reducer: {

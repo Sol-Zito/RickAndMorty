@@ -1,7 +1,7 @@
 import { useAppSelector } from "../../store";
 import BotonFavorito from "../botones/boton-favorito.componente";
 import "./tarjeta-personaje.css";
-import { DatosPersonaje } from "./../../store/todo/rickySlice";
+import { DatosPersonaje } from "../../store/rickySlice";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,10 +9,9 @@ import { Link } from "react-router-dom";
  * Tarjeta para cada personaje dentro de la grilla de personajes.
  *
  * Deberás agregar las propiedades necesarias para mostrar los datos de los personajes
- *  @param {string} url propiedad de la imagen del Personaje
- * @param {string}  name nombre del Personaje
- * @param {number} id id del Personaje
- *
+ * @param {DatosPersonaje} url  id del personaje,
+ * @param {DatosPersonaje} name name de los personaje,
+ *@param {DatosPersonaje} id name del personaje,
  *
  * @returns un JSX element
  */

@@ -1,16 +1,17 @@
 import "./grilla-personajes.css";
 import TarjetaPersonaje from "./tarjeta-personaje.componente";
-import { DatosPersonaje } from "./../../store/todo/rickySlice";
+import { DatosPersonaje } from "../../store/rickySlice";
+
+type personajesRecibidos = { personajes: Array<DatosPersonaje> };
 
 /**
  * Grilla de personajes para la pagina de inicio
  *
  * Deberás agregar las funciones necesarias para mostrar y paginar los personajes
- *@param {DatosPersonaje} personajes --> Aray con los datos de los personajes obtenidos
+ *@param {DatosPersonaje} personajes = Array con los datos de los personajes obtenidos,
+ * estos seran pasados a TarjetaPersonaje
  * @returns un TSX element
  */
-
-type personajesRecibidos = { personajes: Array<DatosPersonaje> };
 
 const GrillaPersonajes = ({ personajes }: personajesRecibidos) => {
   return (

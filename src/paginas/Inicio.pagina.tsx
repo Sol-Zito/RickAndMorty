@@ -3,7 +3,7 @@ import GrillaPersonajes from "../componentes/personajes/grilla-personajes.compon
 import Paginacion from "../componentes/paginacion/paginacion.componente";
 import { useAppDispatch, useAppSelector } from "../store";
 import { useEffect, useState } from "react";
-import { getAllCharacters } from "../store/todo/rickySlice";
+import { getAllCharacters } from "../store/rickySlice";
 
 /**
  * Esta es la pagina principal. Aquí se debera ver el panel de filtros junto con la grilla de personajes.
@@ -24,9 +24,10 @@ const PaginaInicio = () => {
     (state) => state.RickyReducer.characters.pageTotales
   );
 
-  const error = useAppSelector((state) => state.RickyReducer.error);
-
   const [filteredName, changeName] = useState("");
+  /**
+   * Resetea los valores de busqueda
+   */
   const resetValue = () => {
     changeName("");
     setPage(1);
@@ -49,7 +50,6 @@ const PaginaInicio = () => {
         defaultValue={filteredName}
         resetValue={resetValue}
       />
-      {error && <h2>Surgio un error al buscar personaje</h2>}
 
       <Paginacion page={page} setPage={setPage} maxpage={pageTotals} />
       <GrillaPersonajes personajes={characters} />

@@ -55,7 +55,6 @@ export const getAllCharacters = createAsyncThunk(
       `https://rickandmortyapi.com/api/character/?name=${nombre}&page=${page}`
     );
     const parseRes = await response.json();
-    console.log("parseRes", parseRes);
     const paginasTotales = parseRes.info.pages;
     const personajesObtenidos = parseRes.results;
     const recibido: DatosADevolver = {
