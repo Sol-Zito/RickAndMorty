@@ -10,7 +10,9 @@ import { DatosPersonaje } from "./../../store/todo/rickySlice";
  * @returns un TSX element
  */
 
-const GrillaPersonajes = (personajes: DatosPersonaje[]) => {
+type personajesRecibidos = { personajes: Array<DatosPersonaje> };
+
+const GrillaPersonajes = ({ personajes }: personajesRecibidos) => {
   return (
     <div className="grilla-personajes">
       {personajes.map((personaje: DatosPersonaje) => {
