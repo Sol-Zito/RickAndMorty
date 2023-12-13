@@ -1,6 +1,7 @@
 import GrillaPersonajes from "../componentes/personajes/grilla-personajes.componente";
 import { useAppDispatch, useAppSelector } from "../store";
 import { DELETE_FAVORITES } from "../store/rickySlice";
+import { Container } from "./Style";
 
 /**
  * Esta es la pagina de favoritos. Aquí se deberan ver todos los personajes marcados como favoritos
@@ -27,7 +28,7 @@ const PaginaFavoritos = () => {
     }
   };
   return (
-    <div className="container">
+    <Container>
       <div className="actions">
         <h3>Personajes Favoritos</h3>
         <button
@@ -39,7 +40,7 @@ const PaginaFavoritos = () => {
         </button>
       </div>
       <GrillaPersonajes personajes={allCharactersFav} />
-    </div>
+    </Container>
   );
 };
 

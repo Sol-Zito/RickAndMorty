@@ -1,4 +1,4 @@
-import { paginacion } from "../../globalStates/globalVariables";
+import { paginacion } from "../../globalStates/types&interfaces";
 import "./paginacion.css";
 
 /**

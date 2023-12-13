@@ -7,7 +7,7 @@ import {
   EpisodeDates,
   Favorites,
   initialType,
-} from "../globalStates/globalVariables";
+} from "../globalStates/types&interfaces";
 
 const initialState: initialType = {
   characters: {
@@ -18,6 +18,7 @@ const initialState: initialType = {
   error: null,
   favorites: getStorage<DatosPersonaje[]>(Favorites.favs) || [],
   episodes: [],
+  darkMode: "light",
 };
 
 export const getAllCharacters = createAsyncThunk(
@@ -69,6 +70,10 @@ export const personajesSlice = createSlice({
       state.favorites = [];
       setStorage(Favorites.favs, JSON.stringify(state.favorites));
     },
+    CHANGE_MODE: (state) => {
+      state.darkMode = state.darkMode = "light" ? "dark" : "light";
+      console.log("darkMode: ", state.darkMode);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllCharacters.fulfilled, (state, action) => {
@@ -97,6 +102,7 @@ export const personajesSlice = createSlice({
   },
 });
 
-export const { TOGGLE_FAVORITE, DELETE_FAVORITES } = personajesSlice.actions;
+export const { TOGGLE_FAVORITE, DELETE_FAVORITES, CHANGE_MODE } =
+  personajesSlice.actions;
 const RickyReducer = personajesSlice.reducer;
 export default RickyReducer;

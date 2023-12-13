@@ -1,6 +1,6 @@
 import { useAppSelector } from "../../store";
-import { DatosPersonaje } from "../../globalStates/globalVariables";
-import BotonFavorito from "../botones/boton-favorito.componente";
+import { DatosPersonaje } from "../../globalStates/types&interfaces";
+import BotonFavorito from "../botones/BtnFav.componente";
 import "./tarjeta-personaje.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";

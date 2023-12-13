@@ -1,4 +1,4 @@
-import { EpisodeDates } from "../../globalStates/globalVariables";
+import { EpisodeDates } from "../../globalStates/types&interfaces";
 import "./tarjeta-episodio.css";
 
 /**

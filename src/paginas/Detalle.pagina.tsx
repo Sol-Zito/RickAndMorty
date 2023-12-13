@@ -1,11 +1,10 @@
-import "./Detalle.css";
-import TarjetaEpisodio from "../componentes/episodios/tarjeta-episodio.componente";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { getEpisodes } from "../store/rickySlice";
 import { useParams } from "react-router-dom";
-import BotonFavorito from "../componentes/botones/boton-favorito.componente";
-import { EpisodeDates } from "../globalStates/globalVariables";
+import BotonFavorito from "../componentes/botones/BtnFav.componente";
+import { Container, Detalle, DetalleHeader, DetalleHeaderTexto } from "./Style";
+import { GrillaEpisodios } from "./GrillaEpisodios";
 
 /**
  * Esta es la pagina de detalle. Aqui se puede mostrar la vista sobre el personaje seleccionado
@@ -34,8 +33,6 @@ const PaginaDetalle = () => {
   const isFav = favorites.find((item) => item.id === Number(id)) ? true : false;
   const [characterFav, setCharacterFav] = useState(isFav);
 
-  const allEpisodes = useAppSelector((state) => state.RickyReducer.episodes);
-
   /**
    * Toma todos los episodios del personaje, por cada uno a su vez hace un nuevo array donde separa
    * segun los "/" que encuentre. Luego se utiliza el "at()" para tomar el ultimo valor de
@@ -58,44 +55,27 @@ const PaginaDetalle = () => {
     }
   };
   searchEpisodes();
+
   return (
-    <div className="container">
+    <Container>
       <h3>{characterToUse?.name}</h3>
-      <div className={"detalle"}>
-        <div className={"detalle-header"}>
+      <Detalle>
+        <DetalleHeader>
           <img src={characterToUse?.image} alt="Rick Sanchez" />
-          <div className={"detalle-header-texto"}>
+          <DetalleHeaderTexto>
             <p>{characterToUse?.name}</p>
             <p>Planeta: {characterToUse?.origin?.name}</p>
             <p>Genero: {characterToUse?.gender}</p>
-          </div>
+          </DetalleHeaderTexto>
           <BotonFavorito
             esFavorito={characterFav}
             setCharacterFav={setCharacterFav}
             idCharacter={characterToUse}
           />
-        </div>
-      </div>
-      <h4>Lista de episodios donde apareció el personaje</h4>
-      <div className={"episodios-grilla"}>
-        {allEpisodes.length < 1 ? (
-          <h3>No hay episodios</h3>
-        ) : (
-          allEpisodes?.map((data: EpisodeDates) => {
-            const { name, episode, air_date, id } = data;
-            return (
-              <TarjetaEpisodio
-                air_date={air_date}
-                episode={episode}
-                name={name}
-                id={id}
-                key={id}
-              />
-            );
-          })
-        )}
-      </div>
-    </div>
+        </DetalleHeader>
+      </Detalle>
+      <GrillaEpisodios />
+    </Container>
   );
 };
 

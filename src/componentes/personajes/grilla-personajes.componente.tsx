@@ -1,7 +1,7 @@
 import {
   DatosPersonaje,
   personajesRecibidos,
-} from "../../globalStates/globalVariables";
+} from "../../globalStates/types&interfaces";
 import "./grilla-personajes.css";
 import TarjetaPersonaje from "./tarjeta-personaje.componente";
 

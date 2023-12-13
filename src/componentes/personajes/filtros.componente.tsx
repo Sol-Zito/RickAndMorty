@@ -1,4 +1,4 @@
-import { filtro } from "../../globalStates/globalVariables";
+import { filtro } from "../../globalStates/types&interfaces";
 import "./filtros.css";
 
 /**

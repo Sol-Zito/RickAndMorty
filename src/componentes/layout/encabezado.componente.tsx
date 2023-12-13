@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import "./encabezado.css";
+import { CHANGE_MODE } from "../../store/rickySlice";
+import { useAppSelector } from "../../store";
+import { ToggleButton } from "../../globalStates/togglebutton";
 
 /**
  * Encabezado que contiene los links para navegar entre las páginas
@@ -9,6 +12,7 @@ import "./encabezado.css";
  * @returns {JSX.Element}
  */
 const Encabezado = () => {
+  const useDarkMode = useAppSelector((state) => state.RickyReducer.darkMode);
   return (
     <header>
       <div>
@@ -26,6 +30,8 @@ const Encabezado = () => {
             <li>
               <Link to="/detalle">Detalle</Link>
             </li>
+            <ToggleButton />
+            <button onClick={() => CHANGE_MODE()}>{useDarkMode} mode</button>
           </ul>
         </nav>
       </div>
